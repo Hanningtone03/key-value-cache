@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build demo
+        run: g++ -std=c++17 -O2 -o cache_demo src/main.cpp
+      - name: Build and run tests
+        run: |
+          g++ -std=c++17 -O2 -o cache_test test/test_cache.cpp
+          ./cache_test
+      - name: Build and run benchmark
+        run: |
+          g++ -std=c++17 -O2 -o cache_bench benchmark/bench.cpp
+          ./cache_bench
